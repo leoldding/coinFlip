@@ -14,3 +14,4 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app
+    command: reflex -r "\.go$$" -s -- sh -c "go run ./"

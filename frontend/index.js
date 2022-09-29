@@ -15,7 +15,7 @@ function flip() {
     let data = {
         coin: res
     };
-    fetch("/incValues", {
+    fetch("/backend/increment", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

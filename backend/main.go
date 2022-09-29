@@ -2,12 +2,20 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.String(200, "Welcome to Go and Gin!")
-	})
-	r.Run()
+	router := gin.Default()
+
+	backend := router.Group("/backend")
+	{
+		backend.POST("/increment", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "pong",
+			})
+			return
+		})
+	}
+	router.Run(":8080")
 }

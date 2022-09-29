@@ -8,4 +8,9 @@ services:
       - ./frontend:/usr/share/nginx/html
     ports:
       - '3000:3000'
- 
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    volumes:
+      - ./backend:/app

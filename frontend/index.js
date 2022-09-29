@@ -15,7 +15,7 @@ function flip() {
     let data = {
         coin: res
     };
-    fetch("/backend/increment", {
+    fetch("backend/increment", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ function flip() {
     }).then((response) => {
         response.text().then(function (data) {
             let result = JSON.parse(data);
-            console.log(result)
+            console.log(result.message)
         });
     }).catch((error) => {
         console.log(error)

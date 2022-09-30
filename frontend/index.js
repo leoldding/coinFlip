@@ -1,27 +1,37 @@
 flipCoin = document.getElementById("flipButton");
-flipStatus = document.getElementById("flipStatus");
+flipResult = document.getElementById("flipResult");
+headCount = document.getElementById("headCount");
+tailCount = document.getElementById("tailCount");
+
 flipCoin.addEventListener("click", flip);
 
 function flip() {
-    let res;
+    let coinSide;
     if(Math.random() < 0.5) {
-        flipStatus.textContent = "Heads";
-        res = "head";
+        flipResult.textContent = "Heads";
+        coinSide = "head";
+    } else {
+        flipResult.textContent = "Tails";
+        coinSide = "tail";
     }
-    else {
-        flipStatus.textContent = "Tails";
-        res = "tail";
-    }
+
     let data = {
-        "coin": res
+        "coin": coinSide
     };
+
     fetch("backend/increment", {
         method: "POST",
         body: JSON.stringify(data)
     }).then((response) => {
         response.text().then(function (data) {
-            let result = JSON.parse(data);
-            console.log(result.message)
+            let coinSide = JSON.parse(data).message;
+            if(coinSide == "head") {
+                headCount.textContent = "This landed on top."
+                tailCount.textContent = ""
+            } else if(coinSide == "tail") {
+                headCount.textContent = ""
+                tailCount.textContent = "This landed on top."
+            }
         });
     }).catch((error) => {
         console.log(error)

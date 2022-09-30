@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-type Result struct {
-	Coin string `form:"coin" json:"coin" binding:"required"`
+type Coin struct {
+	Face string `form:"coin" json:"coin" binding:"required"`
 }
 
 const (
@@ -35,10 +35,10 @@ func main() {
 	backend := router.Group("/backend")
 	{
 		backend.POST("/increment", func(c *gin.Context) {
-			var res Result
-			if c.BindJSON(&res) == nil {
+			var coin Coin
+			if c.BindJSON(&coin) == nil {
 				c.JSON(http.StatusOK, gin.H{
-					"message": res.Coin,
+					"message": coin.Face,
 				})
 			}
 		})

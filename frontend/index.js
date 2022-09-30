@@ -13,13 +13,9 @@ function flip() {
         res = "tail";
     }
     let data = {
-        coin: res
+        "coin": res
     };
     fetch("backend/increment", {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
         method: "POST",
         body: JSON.stringify(data)
     }).then((response) => {

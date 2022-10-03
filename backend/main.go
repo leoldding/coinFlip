@@ -64,6 +64,10 @@ func main() {
 			}
 		})
 
+		backend.GET("/reset", func(c *gin.Context) {
+			db.Exec("UPDATE coin SET count = 0")
+		})
+
 		backend.GET("/load", func(c *gin.Context) {
 			var headNum int
 			var tailNum int

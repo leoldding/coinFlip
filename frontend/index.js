@@ -2,6 +2,7 @@ flipCoin = document.getElementById("flipButton");
 flipResult = document.getElementById("flipResult");
 headCount = document.getElementById("headCount");
 tailCount = document.getElementById("tailCount");
+resetCounts = document.getElementById("resetButton");
 
 flipCoin.addEventListener("click", flip);
 
@@ -30,6 +31,19 @@ function flip() {
                 tailCount.textContent = JSON.parse(data).value
             }
         });
+    }).catch((error) => {
+        console.log(error)
+    });
+};
+
+resetCounts.addEventListener("click", reset);
+
+function reset() {
+    fetch("backend/reset", {
+        method: "GET",
+    }).then(function (data) {
+            headCount.textContent = "0";
+            tailCount.textContent = "0";
     }).catch((error) => {
         console.log(error)
     });

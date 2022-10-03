@@ -24,16 +24,26 @@ function flip() {
         body: JSON.stringify(data)
     }).then((response) => {
         response.text().then(function (data) {
-            let coinSide = JSON.parse(data).message;
             if(coinSide == "head") {
-                headCount.textContent = "This landed on top."
-                tailCount.textContent = ""
+                headCount.textContent = JSON.parse(data).value
             } else if(coinSide == "tail") {
-                headCount.textContent = ""
-                tailCount.textContent = "This landed on top."
+                tailCount.textContent = JSON.parse(data).value
             }
         });
     }).catch((error) => {
         console.log(error)
     });
-}
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+        fetch("backend/load", {
+            method: "GET",
+        }).then((response) => {
+            response.text().then(function (data) {
+                headCount.textContent = JSON.parse(data).headNum;
+                tailCount.textContent = JSON.parse(data).tailNum;
+            });
+        }).catch((error) => {
+            console.log(error)
+        });
+    });

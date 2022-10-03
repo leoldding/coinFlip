@@ -13,7 +13,7 @@ type Coin struct {
 }
 
 const (
-	host = "localhost"
+	host = "postgres"
 	port = 5432
 	user = "postgres"
 	pw   = "postgres_password"
@@ -32,15 +32,49 @@ func main() {
 	}
 	defer db.Close()
 
+	sql := "CREATE TABLE IF NOT EXISTS coin(face VARCHAR(40) PRIMARY KEY, count INTEGER);"
+	_, err = db.Exec(sql)
+	if err != nil {
+		panic(err)
+	}
+
+	var counter int
+
+	db.QueryRow("SELECT count(*) FROM coin").Scan(&counter)
+
+	if counter == 0 {
+		sql = "INSERT INTO coin(face, count) VALUES ($1, $2), ($3, $4);"
+		_, err = db.Exec(sql, "head", 0, "tail", 0)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	backend := router.Group("/backend")
 	{
 		backend.POST("/increment", func(c *gin.Context) {
 			var coin Coin
+			var value int
 			if c.BindJSON(&coin) == nil {
+				db.Exec("UPDATE coin SET count = count + 1 WHERE face = $1", coin.Face)
+				db.QueryRow("SELECT count FROM COIN WHERE face = $1", coin.Face).Scan(&value)
 				c.JSON(http.StatusOK, gin.H{
-					"message": coin.Face,
+					"value": value,
 				})
 			}
+		})
+
+		backend.GET("/load", func(c *gin.Context) {
+			var headNum int
+			var tailNum int
+
+			db.QueryRow("SELECT count FROM coin WHERE face = $1", "head").Scan(&headNum)
+			db.QueryRow("SELECT count FROM coin WHERE face = $1", "tail").Scan(&tailNum)
+
+			c.JSON(http.StatusOK, gin.H{
+				"headNum": headNum,
+				"tailNum": tailNum,
+			})
 		})
 	}
 	router.Run(":8080")

@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   frontend:
+    restart: always
     image: "leoldding/coin-flip-frontend"
     deploy:
       resources:
@@ -10,6 +11,7 @@ services:
     ports:
       - "3000:3000"
   backend:
+    restart: always
     image: "leoldding/coin-flip-backend"
     deploy:
       resources:

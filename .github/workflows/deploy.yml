@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: docker build -t leoldding/coinFlipFrontend ./frontend
-      - run: docker build -t leoldding/coinFlipBackend ./backend
+      - run: docker build -t leoldding/coin-flip-frontend ./frontend
+      - run: docker build -t leoldding/coin-flip-backend ./backend
 
-      - run: docker push leoldding/coinFlipFrontend
-      - run: docker push leoldding/coinFlipBackend
+      - run: docker push leoldding/coin-flip-frontend
+      - run: docker push leoldding/coin-flip-backend
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
@@ -24,8 +24,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: docker-multi-container
-          environment_name: Dockermulticontainer-env
+          application_name: coinFlip
+          environment_name: Coinflip-env-1
           existing_bucket_name: elasticbeanstalk-us-east-1-312810085553
           region: us-east-1
           version_label: ${{ github.sha }}

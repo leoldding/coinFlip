@@ -1,14 +1,14 @@
 verison: '3'
 services:
   frontend:
-    image: "leoldding/coinFlipFrontend"
+    image: "leoldding/coin-flip-frontend"
     deploy:
       resources:
         limits:
           memory: 128m
     hostname: frontend
   backend:
-    image: "leoldding/coinFlipBackend"
+    image: "leoldding/coin-flip-backend"
     deploy:
       resources:
         limits:

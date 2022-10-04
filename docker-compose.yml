@@ -9,7 +9,7 @@ services:
           memory: 128m
     hostname: frontend
     ports:
-      - "3000:3000"
+      - "80:3000"
   backend:
     restart: always
     image: "leoldding/coin-flip-backend"

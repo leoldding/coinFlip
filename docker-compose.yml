@@ -1,0 +1,22 @@
+verison: '3'
+services:
+  frontend:
+    image: "leoldding/coinFlipFrontend"
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+    hostname: frontend
+  backend:
+    image: "leoldding/coinFlipBackend"
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+    hostname: backend
+    environment:
+      - PGUSER=$PGUSER
+      - PGHOST=$PGHOST
+      - PGDATABASE=$PGDATABASE
+      - PGPASSWORD=$PGPASSWORD
+      - PGPORT=$PGPORT

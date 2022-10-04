@@ -13,20 +13,11 @@ type Coin struct {
 	Face string `form:"coin" json:"coin" binding:"required"`
 }
 
-const (
-	host = "postgres"
-	port = 5432
-	user = "postgres"
-	pw   = "postgres_password"
-	db   = "postgres"
-)
-
 func main() {
-	fmt.Println(os.Getenv("PGDATABASE"))
 	router := gin.Default()
 	router.SetTrustedProxies([]string{":3000"})
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, pw, db)
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+"password=%s dbname=%s sslmode=disable", os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {

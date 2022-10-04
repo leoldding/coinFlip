@@ -7,6 +7,8 @@ services:
         limits:
           memory: 128m
     hostname: frontend
+    ports:
+      - "3000:3000"
   backend:
     image: "leoldding/coin-flip-backend"
     deploy:

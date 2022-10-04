@@ -14,6 +14,12 @@ type Coin struct {
 }
 
 func main() {
+	fmt.Println(os.Getenv("PGHOST"))
+	fmt.Println(os.Getenv("PGPORT"))
+	fmt.Println(os.Getenv("PGUSER"))
+	fmt.Println(os.Getenv("PGPASSWORD"))
+	fmt.Println(os.Getenv("PGDATABASE"))
+
 	router := gin.Default()
 	router.SetTrustedProxies([]string{":3000"})
 

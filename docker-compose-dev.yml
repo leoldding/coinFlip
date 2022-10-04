@@ -20,3 +20,9 @@ services:
       volumes:
         - ./backend:/app
       command: reflex -r "\.go$$" -s -- sh -c "go run ./"
+      environment:
+        - PGUSER=postgres
+        - PGHOST=postgres
+        - PGDATABASE=postgres
+        - PGPASSWORD=postgres_password
+        - PGPORT=5432
